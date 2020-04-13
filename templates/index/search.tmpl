@@ -1,0 +1,8 @@
+{{ define "index/search"}}
+    <div class="ui fluid row">
+    <div class="ui fluid action input" style="width: 100%">
+        <input type="text" id="txtSearchKey" placeholder="请输入姓名或邮箱..." value="{{.SearchKey}}">
+        <div class="ui button" onclick="Search()">搜索</div>
+    </div>
+    </div>
+{{end}}

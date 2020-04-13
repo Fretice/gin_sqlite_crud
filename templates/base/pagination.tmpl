@@ -1,0 +1,12 @@
+{{ define "base/pagination"}}
+<div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
+    {{$curpage := .CurPage}}
+    {{range $i, $v := .PageList}}
+        {{ if eq $v $curpage}}
+        <div class="item active" >{{$v}}</div>
+        {{else}}
+        <div class="item" onclick="GoNextPage({{$v}})">{{$v}}</div>
+        {{end}}
+    {{end}}
+</div>
+{{ end }}

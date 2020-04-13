@@ -1,0 +1,60 @@
+{{ define "index/home"}}
+{{ template "base/header" .}}
+
+
+    <div class="ui grid">
+        <div class="ui row">
+            <h1>人员管理</h1>
+        </div>
+        <div class="row">
+            <button class="ui basic button" onclick="GotoAddPage()"><i class="icon user"></i> 新增 </button>
+        </div>
+        {{ template "index/search" .}}
+        <div class="row">
+            <table class="ui center aligned table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>生日</th>
+                        <th>邮箱</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{ range .Datas}}
+                {{ $gender:= .Gender }}
+                    <tr>
+                        <td></td>
+                        <td>{{.Name}}</td>
+                        {{if gt $gender 0}}
+                            <td>男</td>
+                        {{else}}
+                            <td>女</td>
+                        {{end}}
+                        <td>{{.Age}}</td>
+                        <td>{{.BirthDay}}</td>
+                        <td>{{.Email}}</td>
+                        <td>{{.Phone}}</td>
+                        <td>{{.Address}}</td>
+                        <td>
+                            <div class="two column">
+                                <button class="ui mini button default icon" onclick="GotoDetail({{.Model.ID}})"><i class="paper plane icon"></i>详细</button>
+                                <button class="ui mini button red icon" onclick="ConfirmDelete({{.Model.ID}})"><i class="delete icon"></i>删除</button>
+                            </div>
+                        </td>
+                    </tr>
+                {{ end}}
+                </tbody>
+            </table>
+
+            {{ template "base/pagination" .}}
+        </div>
+    </div>
+{{template  "base/footer" .}}
+
+{{end}}

@@ -1,0 +1,82 @@
+{{define "index/edit"}}
+    {{template "base/header"}}
+    <div class="ui form">
+        <h1 class="ui dividing header">人员信息</h1>
+        <div class="field">
+            <label>姓名</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" name="student_name" id="txt_student_name" placeholder="姓名" value="{{.Detail.Name}}" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>性别</label>
+            <div class="two fields">
+                <div class="field">
+                    <select class="ui fluid dropdown" name="student_gender" id="sel_student_gender" value="{{.Detail.Gender}}">
+                        <option value="">请选择</option>
+                        {{if eq .Detail.Gender 0}}
+                        <option value="0" selected>女</option>
+                        {{else}}
+                        <option value="0">女</option>
+                        {{end}}
+                        {{if eq .Detail.Gender 1}}
+                        <option value="1" selected>男</option>
+                        {{else}}
+                        <option value="1">男</option>
+                        {{end}}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>年龄</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" name="student_age" placeholder="年龄" id="txt_student_age" value="{{.Detail.Age}}" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>出生日期</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" name="student_birthday" placeholder="出生日期" id="txt_student_birthday" value="{{.Detail.BirthDay}}" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>邮箱</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" name="student_email" placeholder="邮箱" id="txt_student_email" value="{{.Detail.Email}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>电话</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" name="student_phone" placeholder="电话" id="txt_student_phone" value="{{.Detail.Phone}}" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>地址</label>
+            <div class="two fields">
+                <div class="field">
+                    <textarea name="student_address" placeholder="地址" id="txt_student_address">{{.Detail.Address}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="ui buttons">
+            <button class="ui button" onclick="GoBack()">后退</button>
+            <div class="or"></div>
+            <button class="ui positive button" onclick="Save()">保存</button>
+            <div class="or"></div>
+            <button class="ui right red button" onclick="GeneralFake()"><i class="box icon"></i> 生成测试数据</button>
+        </div>
+    </div>
+    {{template "base/footer"}}
+{{end}}
