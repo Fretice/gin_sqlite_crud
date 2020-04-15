@@ -25,6 +25,6 @@ Gin+Sqlite 实现的人员管理系统
 
 
 ## Todo-List
-1. swagger集成
-2. cron定时添加
+1. [ ] swagger集成
+2. [x] cron定时添加
 
