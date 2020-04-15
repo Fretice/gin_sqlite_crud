@@ -11,25 +11,25 @@
         </div>
         {{ template "index/search" .}}
         <div class="row">
-            <table class="ui center aligned table">
-                <thead>
+            <table class="ui center nine aligned table">
+                <thead class="full-width">
                     <tr>
-                        <th></th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>年龄</th>
-                        <th>生日</th>
-                        <th>邮箱</th>
-                        <th>电话</th>
-                        <th>地址</th>
-                        <th>操作</th>
+                        <th style="width: 5%">编号</th>
+                        <th style="width: 10%">姓名</th>
+                        <th style="width: 10%">性别</th>
+                        <th style="width: 5%">年龄</th>
+                        <th style="width: 15%">生日</th>
+                        <th style="width: 10%">邮箱</th>
+                        <th style="width: 10%">电话</th>
+                        <th style="width: 15%">地址</th>
+                        <th style="width: 20%">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                 {{ range .Datas}}
                 {{ $gender:= .Gender }}
                     <tr>
-                        <td></td>
+                        <td>{{.ID}}</td>
                         <td>{{.Name}}</td>
                         {{if gt $gender 0}}
                             <td>男</td>

@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"gin_sqlite_crud_demo/models"
+	"github.com/brianvoe/gofakeit"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/robfig/cron/v3"
 	"gopkg.in/ini.v1"
 	"math"
 	"net/http"
@@ -37,6 +39,7 @@ func init() {
 		db.CreateTable(&models.Student{})
 	}
 
+	go AddUserAuto(db)
 }
 
 func main() {
@@ -53,7 +56,7 @@ func main() {
 		if page == 0 {
 			page = 1
 		}
-		datas := model.GetList(page,pagesize, db)
+		datas := model.GetList(page, pagesize, db)
 		total_count := model.GetListTotalCount(db)
 		var page_List []int
 		page_count := int(math.Ceil(float64(total_count / pagesize)))
@@ -64,9 +67,9 @@ func main() {
 			page_List = append(page_List, i)
 		}
 		c.HTML(200, "index/home", gin.H{
-			"Datas":      datas,
-			"CurPage":    page,
-			"PageList":   page_List,
+			"Datas":    datas,
+			"CurPage":  page,
+			"PageList": page_List,
 		})
 	})
 
@@ -118,8 +121,8 @@ func main() {
 			page = 1
 		}
 		var model = models.Student{}
-		students := model.Search(searchKey,page,pagesize, db)
-		total_count:=  model.SearchResultCount(searchKey, db)
+		students := model.Search(searchKey, page, pagesize, db)
+		total_count := model.SearchResultCount(searchKey, db)
 		var page_List []int
 		page_count := int(math.Ceil(float64(total_count / pagesize)))
 		if total_count%pagesize != 0 {
@@ -129,10 +132,10 @@ func main() {
 			page_List = append(page_List, i)
 		}
 		c.HTML(200, "index/home", gin.H{
-			"Datas":      students,
-			"CurPage":    page,
-			"PageList":   page_List,
-			"SearchKey":  searchKey,
+			"Datas":     students,
+			"CurPage":   page,
+			"PageList":  page_List,
+			"SearchKey": searchKey,
 		})
 
 	})
@@ -144,4 +147,15 @@ func main() {
 	})
 
 	var _ = router.Run(":8080")
+}
+
+func AddUserAuto(db *gorm.DB) {
+	c := cron.New(cron.WithSeconds())
+	_, _ = c.AddFunc("*/30 * * * * *", func() {
+		user := models.Student{Name: gofakeit.Name(), Age: gofakeit.Number(10, 20), Email: gofakeit.Email(), Phone: gofakeit.Phone(), BirthDay: gofakeit.Date(), Gender: gofakeit.Number(0, 1), Address: gofakeit.Address().Address}
+		user.Create(&user, db)
+	})
+	c.Run()
+	select {}
+
 }
